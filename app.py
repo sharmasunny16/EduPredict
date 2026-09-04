@@ -44,6 +44,261 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =============================================================
+# Categorical code -> label mappings
+# Source: UCI ML Repository, Dataset 697 "Predict Students' Dropout
+# and Academic Success" (Realinho et al., 2021), official Features
+# Information documentation. Codes are unmodified; only used for
+# display via format_func, never sent to the model as strings.
+# =============================================================
+
+MARITAL_STATUS = {
+    1: "Single",
+    2: "Married",
+    3: "Widower",
+    4: "Divorced",
+    5: "Facto union",
+    6: "Legally separated",
+}
+
+APPLICATION_MODE = {
+    1: "1st phase - general contingent",
+    2: "Ordinance No. 612/93",
+    5: "1st phase - special contingent (Azores Island)",
+    7: "Holders of other higher courses",
+    10: "Ordinance No. 854-B/99",
+    15: "International student (bachelor)",
+    16: "1st phase - special contingent (Madeira Island)",
+    17: "2nd phase - general contingent",
+    18: "3rd phase - general contingent",
+    26: "Ordinance No. 533-A/99, item b2) (Different Plan)",
+    27: "Ordinance No. 533-A/99, item b3 (Other Institution)",
+    39: "Over 23 years old",
+    42: "Transfer",
+    43: "Change of course",
+    44: "Technological specialization diploma holders",
+    51: "Change of institution/course",
+    53: "Short cycle diploma holders",
+    57: "Change of institution/course (International)",
+}
+
+COURSE = {
+    33: "Biofuel Production Technologies",
+    171: "Animation and Multimedia Design",
+    8014: "Social Service (evening attendance)",
+    9003: "Agronomy",
+    9070: "Communication Design",
+    9085: "Veterinary Nursing",
+    9119: "Informatics Engineering",
+    9130: "Equinculture",
+    9147: "Management",
+    9238: "Social Service",
+    9254: "Tourism",
+    9500: "Nursing",
+    9556: "Oral Hygiene",
+    9670: "Advertising and Marketing Management",
+    9773: "Journalism and Communication",
+    9853: "Basic Education",
+    9991: "Management (evening attendance)",
+}
+
+PREVIOUS_QUALIFICATION = {
+    1: "Secondary education",
+    2: "Higher education - bachelor's degree",
+    3: "Higher education - degree",
+    4: "Higher education - master's",
+    5: "Higher education - doctorate",
+    6: "Frequency of higher education",
+    9: "12th year of schooling - not completed",
+    10: "11th year of schooling - not completed",
+    12: "Other - 11th year of schooling",
+    14: "10th year of schooling",
+    15: "10th year of schooling - not completed",
+    19: "Basic education 3rd cycle (9th/10th/11th year) or equiv.",
+    38: "Basic education 2nd cycle (6th/7th/8th year) or equiv.",
+    39: "Technological specialization course",
+    40: "Higher education - degree (1st cycle)",
+    42: "Professional higher technical course",
+    43: "Higher education - master (2nd cycle)",
+}
+
+NATIONALITY = {
+    1: "Portuguese",
+    2: "German",
+    6: "Spanish",
+    11: "Italian",
+    13: "Dutch",
+    14: "English",
+    17: "Lithuanian",
+    21: "Angolan",
+    22: "Cape Verdean",
+    24: "Guinean",
+    25: "Mozambican",
+    26: "Santomean",
+    32: "Turkish",
+    41: "Brazilian",
+    62: "Romanian",
+    100: "Moldova (Republic of)",
+    101: "Mexican",
+    103: "Ukrainian",
+    105: "Russian",
+    108: "Cuban",
+    109: "Colombian",
+}
+
+MOTHER_QUALIFICATION = {
+    1: "Secondary Education - 12th Year of Schooling or Eq.",
+    2: "Higher Education - Bachelor's Degree",
+    3: "Higher Education - Degree",
+    4: "Higher Education - Master's",
+    5: "Higher Education - Doctorate",
+    6: "Frequency of Higher Education",
+    9: "12th Year of Schooling - Not Completed",
+    10: "11th Year of Schooling - Not Completed",
+    11: "7th Year (Old)",
+    12: "Other - 11th Year of Schooling",
+    14: "10th Year of Schooling",
+    18: "General commerce course",
+    19: "Basic Education 3rd Cycle (9th/10th/11th Year) or Equiv.",
+    22: "Technical-professional course",
+    26: "7th year of schooling",
+    27: "2nd cycle of the general high school course",
+    29: "9th Year of Schooling - Not Completed",
+    30: "8th year of schooling",
+    34: "Unknown",
+    35: "Can't read or write",
+    36: "Can read without having a 4th year of schooling",
+    37: "Basic education 1st cycle (4th/5th year) or equiv.",
+    38: "Basic Education 2nd Cycle (6th/7th/8th Year) or Equiv.",
+    39: "Technological specialization course",
+    40: "Higher education - degree (1st cycle)",
+    41: "Specialized higher studies course",
+    42: "Professional higher technical course",
+    43: "Higher Education - Master (2nd cycle)",
+    44: "Higher Education - Doctorate (3rd cycle)",
+}
+
+FATHER_QUALIFICATION = {
+    1: "Secondary Education - 12th Year of Schooling or Eq.",
+    2: "Higher Education - Bachelor's Degree",
+    3: "Higher Education - Degree",
+    4: "Higher Education - Master's",
+    5: "Higher Education - Doctorate",
+    6: "Frequency of Higher Education",
+    9: "12th Year of Schooling - Not Completed",
+    10: "11th Year of Schooling - Not Completed",
+    11: "7th Year (Old)",
+    12: "Other - 11th Year of Schooling",
+    13: "2nd year complementary high school course",
+    14: "10th Year of Schooling",
+    18: "General commerce course",
+    19: "Basic Education 3rd Cycle (9th/10th/11th Year) or Equiv.",
+    20: "Complementary High School Course",
+    22: "Technical-professional course",
+    25: "Complementary High School Course - not concluded",
+    26: "7th year of schooling",
+    27: "2nd cycle of the general high school course",
+    29: "9th Year of Schooling - Not Completed",
+    30: "8th year of schooling",
+    31: "General Course of Administration and Commerce",
+    33: "Supplementary Accounting and Administration",
+    34: "Unknown",
+    35: "Can't read or write",
+    36: "Can read without having a 4th year of schooling",
+    37: "Basic education 1st cycle (4th/5th year) or equiv.",
+    38: "Basic Education 2nd Cycle (6th/7th/8th Year) or Equiv.",
+    39: "Technological specialization course",
+    40: "Higher education - degree (1st cycle)",
+    41: "Specialized higher studies course",
+    42: "Professional higher technical course",
+    43: "Higher Education - Master (2nd cycle)",
+    44: "Higher Education - Doctorate (3rd cycle)",
+}
+
+MOTHER_OCCUPATION = {
+    0: "Student",
+    1: "Legislative/Executive Directors and Managers",
+    2: "Specialists in Intellectual and Scientific Activities",
+    3: "Intermediate Level Technicians and Professions",
+    4: "Administrative staff",
+    5: "Personal Services, Security and Safety Workers and Sellers",
+    6: "Farmers and Skilled Agriculture/Fisheries/Forestry Workers",
+    7: "Skilled Workers in Industry, Construction and Craftsmen",
+    8: "Installation and Machine Operators and Assembly Workers",
+    9: "Unskilled Workers",
+    10: "Armed Forces Professions",
+    90: "Other Situation",
+    99: "(blank)",
+    122: "Health professionals",
+    123: "Teachers",
+    125: "Specialists in information and communication technologies (ICT)",
+    131: "Intermediate level science and engineering technicians",
+    132: "Intermediate level health technicians and professionals",
+    134: "Intermediate level legal, social, sports, cultural technicians",
+    141: "Office workers, secretaries, data processing operators",
+    143: "Data, accounting, statistical, financial and registry operators",
+    144: "Other administrative support staff",
+    151: "Personal service workers",
+    152: "Sellers",
+    153: "Personal care workers and the like",
+    171: "Skilled construction workers (except electricians)",
+    173: "Skilled workers in printing, precision instruments, jewelers, artisans",
+    175: "Workers in food processing, woodworking, clothing and crafts",
+    191: "Cleaning workers",
+    192: "Unskilled workers in agriculture, animal production, fisheries, forestry",
+    193: "Unskilled workers in extractive industry, construction, manufacturing, transport",
+    194: "Meal preparation assistants",
+}
+
+FATHER_OCCUPATION = {
+    0: "Student",
+    1: "Legislative/Executive Directors and Managers",
+    2: "Specialists in Intellectual and Scientific Activities",
+    3: "Intermediate Level Technicians and Professions",
+    4: "Administrative staff",
+    5: "Personal Services, Security and Safety Workers and Sellers",
+    6: "Farmers and Skilled Agriculture/Fisheries/Forestry Workers",
+    7: "Skilled Workers in Industry, Construction and Craftsmen",
+    8: "Installation and Machine Operators and Assembly Workers",
+    9: "Unskilled Workers",
+    10: "Armed Forces Professions",
+    90: "Other Situation",
+    99: "(blank)",
+    101: "Armed Forces Officers",
+    102: "Armed Forces Sergeants",
+    103: "Other Armed Forces personnel",
+    112: "Directors of administrative and commercial services",
+    114: "Hotel, catering, trade and other services directors",
+    121: "Specialists in physical sciences, mathematics, engineering",
+    122: "Health professionals",
+    123: "Teachers",
+    124: "Specialists in finance, accounting, admin. organization, PR",
+    131: "Intermediate level science and engineering technicians",
+    132: "Intermediate level health technicians and professionals",
+    134: "Intermediate level legal, social, sports, cultural technicians",
+    135: "Information and communication technology technicians",
+    141: "Office workers, secretaries, data processing operators",
+    143: "Data, accounting, statistical, financial and registry operators",
+    144: "Other administrative support staff",
+    151: "Personal service workers",
+    152: "Sellers",
+    153: "Personal care workers and the like",
+    154: "Protection and security services personnel",
+    161: "Market-oriented farmers and skilled agricultural/animal workers",
+    163: "Subsistence farmers, livestock keepers, fishermen, hunters",
+    171: "Skilled construction workers (except electricians)",
+    172: "Skilled workers in metallurgy, metalworking and similar",
+    174: "Skilled workers in electricity and electronics",
+    175: "Workers in food processing, woodworking, clothing and crafts",
+    181: "Fixed plant and machine operators",
+    182: "Assembly workers",
+    183: "Vehicle drivers and mobile equipment operators",
+    192: "Unskilled workers in agriculture, animal production, fisheries, forestry",
+    193: "Unskilled workers in extractive industry, construction, manufacturing, transport",
+    194: "Meal preparation assistants",
+    195: "Street vendors (except food) and street service providers",
+}
+
+# =============================================================
 # Model loading
 # =============================================================
 MODEL_PATH = Path(__file__).parent / "models" / "edupredict_model.joblib"
@@ -135,22 +390,47 @@ with st.form("student_form", clear_on_submit=False):
     with tab_admission:
         col1, col2, col3 = st.columns(3)
         with col1:
-            marital_status = st.number_input("Marital Status", min_value=1, max_value=6, value=1)
-            course = st.number_input("Course", min_value=33, max_value=9991, value=9238)
+            marital_status = st.selectbox(
+                "Marital Status",
+                options=list(MARITAL_STATUS.keys()),
+                format_func=lambda x: f"{MARITAL_STATUS[x]} (Code {x})",
+                index=0,
+            )
+            course = st.selectbox(
+                "Course",
+                options=list(COURSE.keys()),
+                format_func=lambda x: f"{COURSE[x]} (Code {x})",
+                index=list(COURSE.keys()).index(9238),
+            )
             previous_qualification_grade = st.number_input(
                 "Previous Qualification Grade", min_value=0.0, max_value=200.0, value=125.0
             )
         with col2:
-            application_mode = st.number_input("Application Mode", min_value=1, max_value=57, value=17)
+            application_mode = st.selectbox(
+                "Application Mode",
+                options=list(APPLICATION_MODE.keys()),
+                format_func=lambda x: f"{APPLICATION_MODE[x]} (Code {x})",
+                index=list(APPLICATION_MODE.keys()).index(17),
+            )
             daytime_attendance = st.selectbox(
                 "Daytime / Evening Attendance",
                 options=[1, 0],
                 format_func=lambda x: "Daytime" if x == 1 else "Evening"
             )
-            nationality = st.number_input("Nationality", min_value=1, max_value=109, value=1)
+            nationality = st.selectbox(
+                "Nationality",
+                options=list(NATIONALITY.keys()),
+                format_func=lambda x: f"{NATIONALITY[x]} (Code {x})",
+                index=0,
+            )
         with col3:
             application_order = st.number_input("Application Order", min_value=0, max_value=9, value=1)
-            previous_qualification = st.number_input("Previous Qualification", min_value=1, max_value=43, value=1)
+            previous_qualification = st.selectbox(
+                "Previous Qualification",
+                options=list(PREVIOUS_QUALIFICATION.keys()),
+                format_func=lambda x: f"{PREVIOUS_QUALIFICATION[x]} (Code {x})",
+                index=0,
+            )
             admission_grade = st.number_input("Admission Grade", min_value=0.0, max_value=200.0, value=130.0)
 
     # ---------------- Academic Performance ----------------
@@ -183,14 +463,33 @@ with st.form("student_form", clear_on_submit=False):
     with tab_personal:
         col1, col2, col3 = st.columns(3)
         with col1:
-            mother_qualification = st.number_input("Mother's Qualification", min_value=1, max_value=44, value=13)
-            father_occupation = st.number_input("Father's Occupation", min_value=0, max_value=195, value=8)
+            mother_qualification = st.selectbox(
+                "Mother's Qualification",
+                options=list(MOTHER_QUALIFICATION.keys()),
+                format_func=lambda x: f"{MOTHER_QUALIFICATION[x]} (Code {x})",
+                # NOTE: original app defaulted this field to 13, but code 13 does not
+                # exist in the official Mother's Qualification code list (it's a
+                # Father's-Qualification-only code). Defaulting to the nearest valid
+                # code (14) instead — flagged in the summary for your review.
+                index=list(MOTHER_QUALIFICATION.keys()).index(14),
+            )
+            father_occupation = st.selectbox(
+                "Father's Occupation",
+                options=list(FATHER_OCCUPATION.keys()),
+                format_func=lambda x: f"{FATHER_OCCUPATION[x]} (Code {x})",
+                index=list(FATHER_OCCUPATION.keys()).index(8),
+            )
             displaced = st.selectbox("Displaced", options=[0, 1], format_func=lambda x: "No" if x == 0 else "Yes")
             scholarship_holder = st.selectbox(
                 "Scholarship Holder", options=[0, 1], format_func=lambda x: "No" if x == 0 else "Yes"
             )
         with col2:
-            father_qualification = st.number_input("Father's Qualification", min_value=1, max_value=44, value=10)
+            father_qualification = st.selectbox(
+                "Father's Qualification",
+                options=list(FATHER_QUALIFICATION.keys()),
+                format_func=lambda x: f"{FATHER_QUALIFICATION[x]} (Code {x})",
+                index=list(FATHER_QUALIFICATION.keys()).index(10),
+            )
             age_at_enrollment = st.number_input("Age at Enrollment", min_value=17, max_value=70, value=19)
             educational_special_needs = st.selectbox(
                 "Educational Special Needs", options=[0, 1], format_func=lambda x: "No" if x == 0 else "Yes"
@@ -199,7 +498,12 @@ with st.form("student_form", clear_on_submit=False):
                 "International Student", options=[0, 1], format_func=lambda x: "No" if x == 0 else "Yes"
             )
         with col3:
-            mother_occupation = st.number_input("Mother's Occupation", min_value=0, max_value=194, value=6)
+            mother_occupation = st.selectbox(
+                "Mother's Occupation",
+                options=list(MOTHER_OCCUPATION.keys()),
+                format_func=lambda x: f"{MOTHER_OCCUPATION[x]} (Code {x})",
+                index=list(MOTHER_OCCUPATION.keys()).index(6),
+            )
             gender = st.selectbox(
                 "Gender", options=[1, 0], format_func=lambda x: "Male" if x == 1 else "Female"
             )
